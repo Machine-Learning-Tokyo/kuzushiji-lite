@@ -6,10 +6,10 @@ from scipy import ndimage
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import connected_components
 
-def build_unet_model(model_ckpt='model.ckpt'):
+def build_unet_model():
   return unet.Unet(channels=1, n_class=2, layers=3, features_root=16)
 
-def segment_img(img_array, net):
+def segment_img(img_array, net, model_ckpt='model.ckpt'):
   """
   img_array is shape (512, 512) np.float from 0 to 1.
   net contains the unet returned by build_unet_model
