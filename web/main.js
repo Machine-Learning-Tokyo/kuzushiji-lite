@@ -129,7 +129,7 @@ class Main {
     this.processBtn.onclick = () => {
       this.processBtn.disabled = true;
       console.log('processing');
-      const canvasData = this.contentCanvas.toDataURL('image/jpg');
+      const canvasData = this.contentCanvas.toDataURL('image/jpeg');
       const ajax = new XMLHttpRequest();
       ajax.open('POST', 'http://localhost:8008/upload');
       ajax.setRequestHeader('Content-Type', 'application/upload');
