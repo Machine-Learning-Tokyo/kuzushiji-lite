@@ -119,8 +119,8 @@ class Main {
     this.contentCtx.strokeStyle = "red";
     for (let i=0; i < segments.length; i++) {
       let s = segments[i];
-      this.contentCtx.rect(s.x, s.y, 20, 20);
-      this.contentCtx.fillText(s.char, s.x, s.y+15)
+      this.contentCtx.rect(s.x-10, s.y-10, 20, 20);
+      this.contentCtx.fillText(s.char, s.x-10, s.y+5)
     }
     this.contentCtx.stroke();
   }
