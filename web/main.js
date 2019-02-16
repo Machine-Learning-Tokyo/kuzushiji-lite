@@ -114,13 +114,13 @@ class Main {
 
   drawSegmentsFromObject(segments) {
     console.log('drawing segments', segments)
-    this.contentCtx.font = "60px Georgia";
+    this.contentCtx.font = "20px Georgia";
     this.contentCtx.fillStyle = "red";
     this.contentCtx.strokeStyle = "red";
     for (let i=0; i < segments.length; i++) {
       let s = segments[i];
-      this.contentCtx.rect(s.x, s.y, 60, 60);
-      this.contentCtx.fillText(s.char, s.x, s.y+45)
+      this.contentCtx.rect(s.x, s.y, 20, 20);
+      this.contentCtx.fillText(s.char, s.x, s.y+15)
     }
     this.contentCtx.stroke();
   }
