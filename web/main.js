@@ -37,14 +37,19 @@ class Main {
 
   setUpProcessBtn() {
     this.processBtn.onclick = () => {
+      this.processBtn.disabled = true;
       console.log('processing');
+      this.contentCtx.font = "20px Georgia";
+      this.contentCtx.fillStyle = "red";
       this.contentCtx.strokeStyle = 'red';
       const segments = this.segmentImage();
       for (let i=0; i < segments.length; i++) {
         let s = segments[i];
         this.contentCtx.rect(s.x, s.y, s.width, s.height);
+        this.contentCtx.fillText(s.char, s.x, s.y+15)
       }
       this.contentCtx.stroke();
+      this.processBtn.disabled = false;
     }
   }
 
@@ -55,18 +60,21 @@ class Main {
         'y': 200,
         'width': 20,
         'height': 20,
+        'char': "\u3041"
       },
       {
         'x': 160,
         'y': 215,
         'width': 25,
         'height': 25,
+        'char': "\u3045"
       },
       {
         'x': 30,
         'y': 400,
         'width': 32,
         'height': 32,
+        'char': "\u3043"
       },
     ]
   }
