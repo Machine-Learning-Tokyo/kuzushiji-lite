@@ -11,13 +11,72 @@ class Main {
     this.contentImg = document.getElementById('content-img');
     this.uploadBtn = document.getElementById('upload-button');
     this.processBtn = document.getElementById('process-button');
+    this.takePicBtn = document.getElementById('take-pic-button');
 
     this.contentCanvas = document.getElementById('content-canvas');
     this.contentCtx = this.contentCanvas.getContext('2d');
 
+    this.initalizeWebcamVariables();
     this.setUploadBtn();
     this.setUpProcessBtn();
     this.drawImageOnCanvas();
+    this.setUpTakePicBtn();
+  }
+
+  setUpTakePicBtn() {
+    this.takePicBtn.onclick = () => {
+      console.log('taking pic');
+      this.openModal();
+    }
+  }
+
+  openModal() {
+    this.camModal.modal('show');
+    this.snapButton.onclick = () => {
+      const hiddenCanvas = document.getElementById('hidden-canvas');
+      const hiddenContext = hiddenCanvas.getContext('2d');
+      hiddenCanvas.width = this.webcamVideoElement.width;
+      hiddenCanvas.height = this.webcamVideoElement.height;
+      hiddenContext.drawImage(this.webcamVideoElement, 0, 0, 
+        hiddenCanvas.width, hiddenCanvas.height);
+      const imageDataURL = hiddenCanvas.toDataURL('image/jpg');
+      this.contentImg.src = imageDataURL;
+      this.contentImg.onload = () => {
+        this.drawImageOnCanvas();
+      }
+      this.camModal.modal('hide');
+    };
+  }
+
+  initalizeWebcamVariables() {
+    this.camModal = $('#cam-modal');
+
+    this.snapButton = document.getElementById('snap-button');
+    this.webcamVideoElement = document.getElementById('webcam-video');
+
+    navigator.getUserMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
+
+    this.camModal.on('hidden.bs.modal', () => {
+      this.stream.getTracks()[0].stop();
+    })
+
+    this.camModal.on('shown.bs.modal', () => {
+      navigator.getUserMedia(
+        {
+          video: true
+        },
+        (stream) => {
+          this.stream = stream;
+          this.webcamVideoElement.srcObject = stream;
+          this.webcamVideoElement.play();
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    })
   }
 
   drawImageOnCanvas() {
