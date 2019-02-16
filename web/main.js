@@ -94,20 +94,32 @@ class Main {
     return [xHeight*scaling, xWidth*scaling];
   }
 
+  drawSegmentsFromObject(segments) {
+    console.log('drawing segments', segments)
+    this.contentCtx.font = "20px Georgia";
+    this.contentCtx.fillStyle = "red";
+    this.contentCtx.strokeStyle = "red";
+    for (let i=0; i < segments.length; i++) {
+      let s = segments[i];
+      this.contentCtx.rect(s.x, s.y, 20, 20);
+      this.contentCtx.fillText(s.char, s.x, s.y+15)
+    }
+    this.contentCtx.stroke();
+  }
+
   setUpProcessBtn() {
     this.processBtn.onclick = () => {
       this.processBtn.disabled = true;
       console.log('processing');
-      this.contentCtx.font = "20px Georgia";
-      this.contentCtx.fillStyle = "red";
-      this.contentCtx.strokeStyle = 'red';
-      const segments = this.segmentImage();
-      for (let i=0; i < segments.length; i++) {
-        let s = segments[i];
-        this.contentCtx.rect(s.x, s.y, s.width, s.height);
-        this.contentCtx.fillText(s.char, s.x, s.y+15)
+      const canvasData = this.contentCanvas.toDataURL();
+      const ajax = new XMLHttpRequest();
+      ajax.open('POST', 'http://localhost:8008/upload');
+      ajax.setRequestHeader('Content-Type', 'application/upload');
+      ajax.send(canvasData);
+      ajax.onload = (x) => {
+        const resp = JSON.parse(x.target.response);
+        this.drawSegmentsFromObject(resp);
       }
-      this.contentCtx.stroke();
       this.processBtn.disabled = false;
     }
   }
