@@ -2,7 +2,7 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 
-def classify_kmnist_classes(img_ar, model_file_path='naive_classifier.h5'):
+def classify_kmnist_classes(img_ar, loaded_model):
   """img_ar contains a chunk float 0-1 shape (x, x) that will be resized to 28x28"""
   
   #resize
