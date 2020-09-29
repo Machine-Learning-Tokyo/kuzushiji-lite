@@ -1,0 +1,10 @@
+starlette
+aiofiles
+-e git://github.com/jakeret/tf_unet.git#egg=tf_unet
+numpy
+tensorflow
+pillow
+scipy
+uvicorn
+matplotlib
+fastai
