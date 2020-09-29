@@ -16,7 +16,7 @@ class Main {
     this.contentCanvas = document.getElementById('content-canvas');
     this.contentCtx = this.contentCanvas.getContext('2d');
 
-    this.initalizeWebcamVariables();
+    this.initializeWebcamVariables();
     this.setUploadBtn();
     this.setUpProcessBtn();
     this.drawImageOnCanvas();
@@ -37,7 +37,7 @@ class Main {
       const hiddenContext = hiddenCanvas.getContext('2d');
       hiddenCanvas.width = this.webcamVideoElement.width;
       hiddenCanvas.height = this.webcamVideoElement.height;
-      hiddenContext.drawImage(this.webcamVideoElement, 0, 0, 
+      hiddenContext.drawImage(this.webcamVideoElement, 0, 0,
         hiddenCanvas.width, hiddenCanvas.height);
       const imageDataURL = hiddenCanvas.toDataURL('image/jpg');
       this.contentImg.src = imageDataURL;
@@ -48,7 +48,7 @@ class Main {
     };
   }
 
-  initalizeWebcamVariables() {
+  initializeWebcamVariables() {
     this.camModal = $('#cam-modal');
 
     this.snapButton = document.getElementById('snap-button');
