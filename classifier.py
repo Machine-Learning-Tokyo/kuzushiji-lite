@@ -14,7 +14,10 @@ import uvicorn
 import aiohttp
 import asyncio
 
-path=Path('data/') 
+from pathlib import Path
+import pickle
+
+path=Path('data/')
 char_to_id = pickle.load(open(path/'char_to_id.pkl','rb'))
 classes = list(char_to_id.keys())
 tfms = get_transforms(do_flip=False)
@@ -31,9 +34,9 @@ async def get_bytes(url):
 
 app = Starlette(debug=True)
 #app.mount('/static', StaticFiles(directory='web'), name='static')
-app.add_middleware(CORSMiddleware, 
-allow_origins=['*'], 
-allow_methods=['GET', 'POST'], 
+app.add_middleware(CORSMiddleware,
+allow_origins=['*'],
+allow_methods=['GET', 'POST'],
 allow_headers=['*'],
 allow_credentials=True,
 expose_headers=['*'])
@@ -54,7 +57,7 @@ def get_chunks(centers, img):
     #w, h = img.shape
     sq = 20
     for point in centers:
-        
+
         dY = dX = 30
         nw_pnts = [max(0,point[0]-dX),min(512,point[0]+dX),max(point[1]-dY,0),min(512,point[1]+dY)]
         #if point[0]- dX <0: nw_pnts[0] = point[0]- dX
